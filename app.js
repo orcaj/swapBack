@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // simple route
 
+const dotenv = require('dotenv');
+const env = process.env.NODE_ENV || 'local';
+dotenv.config({ path: env + '.env' });
 
 
 const db = require('./server/models');
@@ -20,14 +23,11 @@ db.sequelize.sync();
 //     console.log("Drop and re-sync db.");
 // });
 
-
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to bezkoder application." });
 });
 
-const dotenv = require('dotenv');
-const env = process.env.NODE_ENV || 'local';
-dotenv.config({ path: env + '.env' });
+
 
 const indexRoute = require('./server/routes');
 

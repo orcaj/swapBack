@@ -1,9 +1,9 @@
 module.exports = {
     HOST: "localhost",
-    USER: "root",
-    PASSWORD: "",
-    DB: "swap_bnb",
-    dialect: "mysql",
+    USER: process.env.DB_USER,
+    PASSWORD: process.env.DB_PASSWORD,
+    DB: process.env.DB_NAME,
+    dialect: process.env.DB_dialect,
     pool: {
         max: 5,
         min: 0,
