@@ -23,7 +23,7 @@ db.sequelize.sync();
 //     console.log("Drop and re-sync db.");
 // });
 
-app.get("http://stage.recoveryswap.finance:8080/", (req, res) => {
+app.get("/", (req, res) => {
     res.json({ message: "Welcome to bezkoder application." });
 });
 
