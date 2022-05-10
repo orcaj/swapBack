@@ -6,28 +6,25 @@ var Web3 = require('web3');
 const Provider = require('@truffle/hdwallet-provider');
 
 
-var SmartContractAddress = "0x3ec0C403Ce971959948bee06cd75639FdBf995b8";
+var SmartContractAddress = process.env.SMART_CONTRACT;
 var SmartContractABI = [{ "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "inputs": [], "name": "claim", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "depositBNB", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [], "name": "getReferralCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address[]", "name": "_userWalletsArray", "type": "address[]" }, { "internalType": "uint256[]", "name": "_referralAmountArray", "type": "uint256[]" }], "name": "inputInfo", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "referralCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
-const privateKey = "8255a0fef01da45fcd6dff5600d9d621c58abbabeb9f6bcfffbdbf71e60be5ac";
-const address = "0xdA8c65AC5BCEA1C1e3b9221813F492438582b619"
-// var bscurl = "https://data-seed-prebsc-1-s1.binance.org:8545";
-var bscurl = "https://ropsten.infura.io/v3/59bbb60536324212bcac1e49d10814d8";
+const privateKey = process.env.PRIMARY_KEY;
+const address = process.env.OWNER_ADDRESS
+var bscurl = "https://data-seed-prebsc-1-s1.binance.org:8545";
+// var bscurl = "https://ropsten.infura.io/v3/59bbb60536324212bcac1e49d10814d8";
 
 const sendData = async (users_wallets, users_amount) => {
-    console.log({ bscurl })
     var provider = new Provider(privateKey, bscurl);
     var web3 = new Web3(provider);
     var myContract = new web3.eth.Contract(SmartContractABI, SmartContractAddress);
 
-    var result = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
-    console.log({ result })
-    return result;
+    // var result = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
+    // return result;
 
 }
 
 module.exports = async function () {
     try {
-        console.log('every minute')
         const users = await User.findAll();
         const users_wallets = [];
         const users_amount = [];
@@ -51,12 +48,14 @@ module.exports = async function () {
             if (claimLog) {
                 amount -= claimLog.claim_amount;
             }
-            users_amount.push(amount.toFixed(4));
+            const referAmount = amount * 10 ** 18
+            users_amount.push(referAmount.toString());
         }
-        console.log('before deploy', { users_wallets, users_amount })
+        console.log('users_wallets', users_wallets.toString())
+        console.log('users_amount', users_amount.toString())
         const res = await sendData(users_wallets, users_amount);
         console.log('after deply', res)
     } catch (error) {
-        CONSOLE_LOGGER.error(error);
+        console.error(error);
     }
 };

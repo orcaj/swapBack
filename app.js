@@ -38,6 +38,7 @@ const uploadInfo = require('./server/cronjob/uploadInfo');
 
 var cron = require('node-cron');
 cron.schedule('* * * * *', uploadInfo)
+// uploadInfo();
 
 
 // set port, listen for requests
