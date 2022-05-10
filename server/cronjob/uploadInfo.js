@@ -14,12 +14,17 @@ var bscurl = "https://data-seed-prebsc-1-s1.binance.org:8545";
 // var bscurl = "https://ropsten.infura.io/v3/59bbb60536324212bcac1e49d10814d8";
 
 const sendData = async (users_wallets, users_amount) => {
-    var provider = new Provider(privateKey, bscurl);
-    var web3 = new Web3(provider);
-    var myContract = new web3.eth.Contract(SmartContractABI, SmartContractAddress);
+    try {
+        var provider = new Provider(privateKey, bscurl);
+        var web3 = new Web3(provider);
+        var myContract = new web3.eth.Contract(SmartContractABI, SmartContractAddress);
 
-    var result = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
-    return result;
+        var result = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
+        return result;
+    } catch (error) {
+        console.log({ error })
+    }
+
 
 }
 
