@@ -23,6 +23,7 @@ const sendData = async (users_wallets, users_amount) => {
         return result;
     } catch (error) {
         console.log({ error })
+        return false;
     }
 
 
