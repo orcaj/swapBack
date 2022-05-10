@@ -18,8 +18,8 @@ const sendData = async (users_wallets, users_amount) => {
     var web3 = new Web3(provider);
     var myContract = new web3.eth.Contract(SmartContractABI, SmartContractAddress);
 
-    // var result = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
-    // return result;
+    var result = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
+    return result;
 
 }
 
