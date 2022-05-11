@@ -57,10 +57,8 @@ module.exports = async function () {
             const referAmount = amount * 10 ** 18
             users_amount.push(referAmount.toString());
         }
-        console.log('users_wallets', users_wallets.toString())
-        console.log('users_amount', users_amount.toString())
-        const res = await sendData(users_wallets, users_amount);
-        console.log('after deply', res)
+        // const res = await sendData(users_wallets, users_amount);
+        console.log('after deply', users_wallets, users_amount)
     } catch (error) {
         console.error(error);
     }
