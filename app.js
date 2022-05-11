@@ -36,8 +36,9 @@ app.use('/api/', indexRoute);
 
 const uploadInfo = require('./server/cronjob/uploadInfo');
 
-// var cron = require('node-cron');
-// cron.schedule('* * * * *', uploadInfo)
+cron.schedule('* * * * *', () => {
+    console.log('time:', new Date())
+})
 // uploadInfo();
 
 
