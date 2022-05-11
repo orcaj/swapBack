@@ -44,11 +44,13 @@ module.exports = async function () {
             const referAmount = amount * 10 ** 18
             users_amount.push(referAmount.toString());
         }
-        console.log('after deploy', users_wallets, users_amount)
 
-        
-        const res = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
-        console.log('after deploy', users_wallets, users_amount, res)
+        // const res = await sendData(users_wallets, users_amount);
+        if (users_amount.length > 0) {
+            const res = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
+            console.log('after deploy', users_wallets, users_amount, res)
+        }
+        console.log('not deploy', users_wallets, users_amount)
     } catch (error) {
         console.error(error);
     }
