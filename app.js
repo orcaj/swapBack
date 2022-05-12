@@ -24,6 +24,8 @@ db.sequelize.sync();
 // });
 
 app.get("/", (req, res) => {
+    let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+    console.log({ ip })
     res.json({ message: "Welcome to bezkoder application." });
 });
 
