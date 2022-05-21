@@ -1,10 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-var corsOptions = {
-    origin: process.env.FRONT_URL
-};
-app.use(cors(corsOptions));
+
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -15,6 +12,11 @@ const dotenv = require('dotenv');
 const env = process.env.NODE_ENV || 'local';
 dotenv.config({ path: env + '.env' });
 
+
+var corsOptions = {
+    origin: process.env.FRONT_URL
+};
+app.use(cors(corsOptions));
 
 const db = require('./server/models');
 db.sequelize.sync();

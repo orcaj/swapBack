@@ -11,4 +11,8 @@ app.post("/collect-recot", authmiddleware, swapController.collectRect);
 app.post("/claim", authmiddleware, swapController.claim);
 
 
+app.get("/get-pool", authmiddleware, swapController.getPoolList);
+app.post("/generate-pool", authmiddleware, swapController.generatePool);
+
+
 module.exports = app;

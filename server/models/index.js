@@ -17,5 +17,6 @@ db.sequelize = sequelize;
 db.user = require("./User.model")(sequelize, Sequelize);
 db.referral = require("./Referral.model")(sequelize, Sequelize);
 db.claimLog = require("./ClaimLog.model")(sequelize, Sequelize);
+db.pool = require("./Pool.model")(sequelize, Sequelize);
 
 module.exports = db;

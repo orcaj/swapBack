@@ -1,6 +1,7 @@
 const User = require('../models/')['user']
 const Referral = require('../models')['referral']
 const ClaimLog = require('../models')['claimLog']
+const Pool = require('../models')['pool']
 const res = require('express/lib/response');
 const jwt = require('jsonwebtoken');
 
@@ -54,11 +55,11 @@ async function getReferralInfo(req, res) {
         }
     }
     const claimLog = await ClaimLog.findOne({ where: { user_id: userId } });
-    if(claimLog){
+    if (claimLog) {
         amount -= claimLog.claim_amount;
     }
 
-    return res.send({ result: true, referralLink, amount : amount.toFixed(4) });
+    return res.send({ result: true, referralLink, amount: amount.toFixed(4) });
 }
 
 async function collectRect(req, res) {
@@ -97,4 +98,26 @@ async function claim(req, res) {
     return res.send({ result: true });
 }
 
-module.exports = { connectWallet, getReferralInfo, collectRect, claim };
+async function generatePool(req, res) {
+    const userId = req.user.id;
+    const { worthless_amount, bnb, recot_amount, start_date, end_date } = req.body;
+    console.log({start_date, end_date})
+    await Pool.create({
+        user_id: userId,
+        worthless_amount, bnb, recot_amount, start_date, end_date
+    })
+    const pools = await Pool.findAll({
+        where: { user_id: userId }
+    })
+    return res.send({ result: true, pools });
+}
+
+async function getPoolList(req, res) {
+    const userId = req.user.id;
+    const pools = await Pool.findAll({
+        where: { user_id: userId }
+    })
+    return res.send({ result: true, pools });
+}
+
+module.exports = { connectWallet, getReferralInfo, collectRect, claim, generatePool, getPoolList };
