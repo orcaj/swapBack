@@ -122,9 +122,10 @@ async function getPoolList(req, res) {
 
 async function claimPool(req, res) {
     const userId = req.user.id;
-    const { amount, id } = req.body;
+    const { id, bnb, recot } = req.body;
     const pool = await Pool.findByPk(id);
-    pool.claimed_amount = pools.claimed_amount + amount;
+    pool.claimed_amount = pools.claimed_amount + bnb;
+    pool.claimed_recot = pools.claimed_recot + recot;
     await pool.save();
 
     const pools = await Pool.findAll({

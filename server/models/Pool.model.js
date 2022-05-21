@@ -25,6 +25,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.FLOAT,
             defaultValue: 0,
         },
+        claimed_recot: {
+            type: Sequelize.FLOAT,
+            defaultValue: 0,
+        },
         deposit_id: {
             type: Sequelize.STRING,
         }
