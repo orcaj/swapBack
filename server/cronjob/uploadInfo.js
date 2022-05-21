@@ -11,7 +11,7 @@ var SmartContractABI = [{ "anonymous": false, "inputs": [{ "indexed": true, "int
 const privateKey = process.env.PRIMARY_KEY;
 const address = process.env.OWNER_ADDRESS
 var bscurl = "https://data-seed-prebsc-1-s1.binance.org:8545";
-// var bscurl = "https://ropsten.infura.io/v3/59bbb60536324212bcac1e49d10814d8";
+var bscurl = "https://ropsten.infura.io/v3/59bbb60536324212bcac1e49d10814d8";
 var provider = new Provider(privateKey, bscurl);
 var web3 = new Web3(provider);
 var myContract = new web3.eth.Contract(SmartContractABI, SmartContractAddress);
@@ -44,13 +44,13 @@ module.exports = async function () {
             const referAmount = amount * 10 ** 18
             users_amount.push(referAmount.toString());
         }
+
         // const res = await sendData(users_wallets, users_amount);
         if (users_amount.length > 0) {
             const res = await myContract.methods.inputInfo(users_wallets, users_amount).send({ from: address });
             console.log('after deploy', users_wallets, users_amount, res)
         }
         console.log('not deploy', users_wallets, users_amount)
-
     } catch (error) {
         console.error(error);
     }
