@@ -1,0 +1,1 @@
+export PATH=/root/nodeext/bin/:$PATH
