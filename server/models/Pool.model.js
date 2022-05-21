@@ -20,6 +20,13 @@ module.exports = (sequelize, Sequelize) => {
         },
         end_date: {
             type: Sequelize.STRING,
+        },
+        claimed_amount: {
+            type: Sequelize.FLOAT,
+            defaultValue: 0,
+        },
+        deposit_id: {
+            type: Sequelize.STRING,
         }
     });
     return Pool;

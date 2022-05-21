@@ -100,10 +100,10 @@ async function claim(req, res) {
 
 async function generatePool(req, res) {
     const userId = req.user.id;
-    const { worthless_amount, bnb, recot_amount, start_date, end_date } = req.body;
-    console.log({start_date, end_date})
+    const { depositId, worthless_amount, bnb, recot_amount, start_date, end_date } = req.body;
     await Pool.create({
         user_id: userId,
+        deposit_id: depositId,
         worthless_amount, bnb, recot_amount, start_date, end_date
     })
     const pools = await Pool.findAll({
@@ -120,4 +120,17 @@ async function getPoolList(req, res) {
     return res.send({ result: true, pools });
 }
 
-module.exports = { connectWallet, getReferralInfo, collectRect, claim, generatePool, getPoolList };
+async function claimPool(req, res) {
+    const userId = req.user.id;
+    const { amount, id } = req.body;
+    const pool = await Pool.findByPk(id);
+    pool.claimed_amount = pools.claimed_amount + amount;
+    await pool.save();
+
+    const pools = await Pool.findAll({
+        where: { user_id: userId }
+    })
+    return res.send({ result: true, pools });
+}
+
+module.exports = { connectWallet, getReferralInfo, collectRect, claim, generatePool, getPoolList, claimPool };

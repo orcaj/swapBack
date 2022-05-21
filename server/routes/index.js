@@ -14,5 +14,7 @@ app.post("/claim", authmiddleware, swapController.claim);
 app.get("/get-pool", authmiddleware, swapController.getPoolList);
 app.post("/generate-pool", authmiddleware, swapController.generatePool);
 
+app.post("/claim-pool", authmiddleware, swapController.claimPool);
+
 
 module.exports = app;
