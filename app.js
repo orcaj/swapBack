@@ -12,6 +12,12 @@ const dotenv = require('dotenv');
 const env = process.env.NODE_ENV || 'local';
 dotenv.config({ path: env + '.env' });
 
+var corsOptions = {
+    origin: process.env.FRONT_URL
+};
+console.log('process.env.FRONT_URL', process.env.FRONT_URL)
+
+app.use(cors(corsOptions));
 
 var corsOptions = {
     origin: process.env.FRONT_URL
