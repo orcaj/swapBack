@@ -124,8 +124,8 @@ async function claimPool(req, res) {
     const userId = req.user.id;
     const { id, bnb, recot } = req.body;
     const pool = await Pool.findByPk(id);
-    pool.claimed_amount = pools.claimed_amount + bnb;
-    pool.claimed_recot = pools.claimed_recot + recot;
+    pool.claimed_amount = pool.claimed_amount + bnb;
+    pool.claimed_recot = pool.claimed_recot + recot;
     await pool.save();
 
     const pools = await Pool.findAll({
