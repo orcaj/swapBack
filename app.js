@@ -12,9 +12,9 @@ const dotenv = require('dotenv');
 const env = process.env.NODE_ENV || 'local';
 dotenv.config({ path: env + '.env' });
 
-
 var corsOptions = {
-    origin: [process.env.FRONT_URL, 'http://staging.recoveryswap.finance']
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 app.use(cors(corsOptions));
 
