@@ -101,11 +101,16 @@ async function claim(req, res) {
 async function generatePool(req, res) {
     const userId = req.user.id;
     const { depositId, worthless_amount, bnb, recot_amount, start_date, end_date } = req.body;
-    await Pool.create({
-        user_id: userId,
-        deposit_id: depositId,
-        worthless_amount, bnb, recot_amount, start_date, end_date
-    })
+
+    const existPool = await Pool.findOne({ where: { deposit_id: depositId } });
+    if (!existPool) {
+        await Pool.create({
+            user_id: userId,
+            deposit_id: depositId,
+            worthless_amount, bnb, recot_amount, start_date, end_date
+        })
+    }
+
     const pools = await Pool.findAll({
         where: { user_id: userId }
     })
